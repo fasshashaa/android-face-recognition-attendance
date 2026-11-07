@@ -12,7 +12,8 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
     val employeeId: String,
-    val imagePath: String // Path foto wajah yang didaftarkan
+    val imagePath: String, // Path foto wajah yang didaftarkan
+    val faceEmbedding: String = ""
 )
 
 // ==========================================
@@ -65,7 +66,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "face_attend_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
